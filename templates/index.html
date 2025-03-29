@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoNight - Preços de Criptomoedas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .coin-card {
+            transition: transform 0.2s;
+        }
+        .coin-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="text-center mb-5">CryptoNight</h1>
+        <div class="row">
+            {% for coin in coins %}
+            <div class="col-md-4 mb-4">
+                <div class="card coin-card">
+                    <div class="card-body">
+                        <h5 class="card-title text-capitalize">{{ coin }}</h5>
+                        <p class="card-text" id="price-{{ coin }}">Carregando...</p>
+                        <button class="btn btn-primary" onclick="getPrice('{{ coin }}')">Atualizar Preço</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function getPrice(coin) {
+            const priceElement = document.getElementById(`price-${coin}`);
+            priceElement.textContent = 'Carregando...';
+            
+            fetch(`/price/${coin}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.erro) {
+                        priceElement.textContent = `Erro: ${data.erro}`;
+                    } else {
+                        priceElement.textContent = `Preço: ${data.preco}\nData: ${data.data}\nHora: ${data.hora}`;
+                    }
+                })
+                .catch(error => {
+                    priceElement.textContent = `Erro: ${error.message}`;
+                });
+        }
+
+        // Atualizar preços automaticamente a cada 30 segundos
+        setInterval(() => {
+            coins.forEach(coin => getPrice(coin));
+        }, 30000);
+
+        // Carregar preços iniciais
+        window.onload = () => {
+            coins.forEach(coin => getPrice(coin));
+        };
+    </script>
+</body>
+</html> 
