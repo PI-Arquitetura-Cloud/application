@@ -2,12 +2,17 @@
 
 Este é o repositório do projeto CryptoNight, desenvolvido para a disciplina de PI - Arquitetura Cloud.
 
+# Link do Projeto
+O projeto está hospedado no [Render](https://render.com/), uma plataforma de nuvem que simplifica a implantação de aplicações web, oferecendo suporte a diversas linguagens e frameworks.
+
+Acesse o site do projeto: [CryptoNight](https://cryptocurrence-pi.onrender.com)
+
 ## Estrutura do Projeto
 
-Este repositório está organizado em duas branches principais:
+Este projeto está organizado em dois repositórios principais:
 
-- `main`: Contém o código fonte do projeto
-- `docs`: Contém toda a documentação do projeto, incluindo:
+- `application`: Contém o código fonte do projeto
+- `documentation`: Contém toda a documentação do projeto, incluindo:
   - Cronograma
   - MVP
   - Documentação técnica
@@ -46,16 +51,6 @@ gunicorn -c gunicorn_config.py app:app
 ```
 
 O aplicativo estará disponível em `http://localhost:8000`
-
-## 📚 Documentação
-
-Para acessar a documentação completa do projeto, incluindo cronograma, MVP e outros documentos, acesse a branch `docs`:
-
-```bash
-git checkout docs
-```
-
-Ou acesse diretamente através do GitHub na branch `docs`.
 
 ## 🛠️ Tecnologias Utilizadas
 
