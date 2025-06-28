@@ -1,10 +1,18 @@
 from flask import Flask, jsonify, render_template
+from flask_cors import CORS
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 import os
 
 app = Flask(__name__)
+# Configuração mais específica do CORS para aceitar requisições do Vercel
+CORS(app, origins=[
+    "http://localhost:3000", 
+    "https://*.vercel.app",
+    "https://*.vercel.com",
+    "https://cryptonight-frontend.vercel.app",  # Seu domínio específico
+], methods=["GET", "POST", "OPTIONS"])
 
 # Coins to get price data
 coins = [
@@ -25,6 +33,7 @@ def get_price(selected_coin: str):
 
         soup = BeautifulSoup(response.text, "html.parser")
         span = soup.find("span", class_="sc-65e7f566-0 WXGwg base-text", attrs={"data-test": "text-cdp-price-display"})
+        
 
         if span:
             preco = span.text.strip()
