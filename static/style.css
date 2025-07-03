@@ -1,0 +1,93 @@
+body {
+    background: #181c25;
+    color: #f5f6fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 20px 0;
+    margin-bottom: 48px;
+}
+
+.logo {
+    width: 64px;
+    height: 64px;
+}
+
+h1 {
+    font-size: 2.8rem;
+    color: #fff;
+    font-weight: 800;
+}
+
+.coins-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+}
+
+.coin-card {
+    background: #23283a;
+    border-radius: 22px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+    padding: 32px 24px 24px 24px;
+    min-width: 240px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.coin-card:hover {
+    transform: translateY(-5px);
+}
+
+.coin-icon {
+    height: 50px;
+    margin-bottom: 12px;
+}
+
+.coin-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.coin-price {
+    font-size: 1.15rem;
+    margin-bottom: 18px;
+    min-height: 48px;
+    white-space: pre-line;
+    color: #b2becd;
+}
+
+.coin-price.error {
+    color: #ff6b6b;
+    font-weight: 600;
+}
+
+.refresh-btn {
+    background: #3b82f6;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 28px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.refresh-btn:hover {
+    background: #2563eb;
+}

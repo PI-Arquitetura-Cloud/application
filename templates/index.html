@@ -4,42 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CryptoNight - Preços de Criptomoedas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .coin-card {
-            transition: transform 0.2s;
-        }
-        .coin-card:hover {
-            transform: translateY(-5px);
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container py-5">
-        <h1 class="text-center mb-5">CryptoNight</h1>
-        <div class="row">
+    <div class="container">
+        <header>
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="CryptoNight Logo" class="logo">
+            <h1>CryptoNight</h1>
+        </header>
+        <div class="coins-grid">
             {% for coin in coins %}
-            <div class="col-md-4 mb-4">
-                <div class="card coin-card">
-                    <div class="card-body">
-                        <h5 class="card-title text-capitalize">{{ coin }}</h5>
-                        <p class="card-text" id="price-{{ coin }}">Carregando...</p>
-                        <button class="btn btn-primary" onclick="getPrice('{{ coin }}')">Atualizar Preço</button>
-                    </div>
+            <div class="coin-card">
+                {% if coin == 'bitcoin' %}
+                <img src="{{ url_for('static', filename='images/bitcoin-btc-logo.svg') }}" alt="Bitcoin logo" class="coin-icon">
+                {% elif coin == 'bnb' %}
+                <img src="{{ url_for('static', filename='images/bnb-bnb-logo.svg') }}" alt="BNB logo" class="coin-icon">
+                {% elif coin == 'ethereum' %}
+                <img src="{{ url_for('static', filename='images/ethereum-eth-logo.svg') }}" alt="Ethereum logo" class="coin-icon">
+                {% elif coin == 'xrp' %}
+                <img src="{{ url_for('static', filename='images/xrp-symbol-black-128.png') }}" alt="XRP logo" class="coin-icon">
+                {% elif coin == 'dogecoin' %}
+                <img src="{{ url_for('static', filename='images/dogecoin-doge-logo.svg') }}" alt="Dogecoin logo" class="coin-icon">
+                {% elif coin == 'solana' %}
+                <img src="{{ url_for('static', filename='images/solana-sol-logo.svg') }}" alt="Solana logo" class="coin-icon">
+                {% elif coin == 'cardano' %}
+                <img src="{{ url_for('static', filename='images/cardano-ada-logo.svg') }}" alt="Cardano logo" class="coin-icon">
+                {% elif coin == 'litecoin' %}
+                <img src="{{ url_for('static', filename='images/litecoin-ltc-logo.svg') }}" alt="Litecoin logo" class="coin-icon">
+                {% else %}
+                <img src="{{ url_for('static', filename='images/' + coin + '-logo.svg') }}" alt="{{ coin }} logo" class="coin-icon">
+                {% endif %}
+                <div class="coin-info">
+                    <h2 class="coin-title">{{ coin|title }}</h2>
+                    <p class="coin-price" id="price-{{ coin }}"><i class="fas fa-spinner fa-spin"></i> Carregando...</p>
+                    <button class="refresh-btn" onclick="getPrice('{{ coin }}')">Atualizar Preço</button>
                 </div>
             </div>
             {% endfor %}
         </div>
     </div>
-
     <script>
+        var coins = {{ coins|tojson }};
+        console.log(coins);
         function getPrice(coin) {
             const priceElement = document.getElementById(`price-${coin}`);
             priceElement.textContent = 'Carregando...';
-            
             fetch(`/price/${coin}`)
                 .then(response => response.json())
                 .then(data => {
@@ -53,13 +63,9 @@
                     priceElement.textContent = `Erro: ${error.message}`;
                 });
         }
-
-        // Atualizar preços automaticamente a cada 30 segundos
         setInterval(() => {
             coins.forEach(coin => getPrice(coin));
         }, 30000);
-
-        // Carregar preços iniciais
         window.onload = () => {
             coins.forEach(coin => getPrice(coin));
         };

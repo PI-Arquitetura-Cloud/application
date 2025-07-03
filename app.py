@@ -6,13 +6,7 @@ from datetime import datetime
 import os
 
 app = Flask(__name__)
-# Configuração mais específica do CORS para aceitar requisições do Vercel
-CORS(app, origins=[
-    "http://localhost:3000", 
-    "https://*.vercel.app",
-    "https://*.vercel.com",
-    "https://cryptonight-frontend.vercel.app",  # Seu domínio específico
-], methods=["GET", "POST", "OPTIONS"])
+CORS(app)
 
 # Coins to get price data
 coins = [
@@ -20,7 +14,11 @@ coins = [
     'ethereum',
     'bnb',
     'dogecoin',
-    'xrp'
+    'xrp',
+    'solana',
+    'cardano',
+    'litecoin'
+    
 ]
 
 def get_price(selected_coin: str):
@@ -32,7 +30,7 @@ def get_price(selected_coin: str):
         response.raise_for_status()
 
         soup = BeautifulSoup(response.text, "html.parser")
-        span = soup.find("span", class_="sc-65e7f566-0 WXGwg base-text", attrs={"data-test": "text-cdp-price-display"})
+        span = soup.find("span", attrs={"data-test": "text-cdp-price-display"})
         
 
         if span:

@@ -2,7 +2,7 @@ import requests
 
 from bs4 import BeautifulSoup
 
-url = 'https://coinmarketcap.com/currencies/ethereum'
+url = 'https://coinmarketcap.com/currencies/bitcoin'
 response = requests.get(url)
 
 soup = BeautifulSoup(response.text, "html.parser")
